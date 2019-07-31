@@ -28,33 +28,31 @@ app.set('view engine', 'pug')
 
 // routes
 app.get('/', async function (req, res, next) {
-  res.render('posts', { posts: [{
-    title: "Guillermo's playlist",
-    description: 'Creatine supplementation is the reference compound for increasing muscular creatine levels; there is variability in this increase, however, with some nonresponders.',
-    author: 'Guillermo Rodas'
-  }] })
+  res.render('playlists', {
+    playlists: { items: playlistMocks }
+  })
 })
 
 app.get('/login', (req, res) => {
   const state = generateRandomString(16)
 
   const queryString = querystring.stringify({
-    response_type: "code",
+    response_type: 'code',
     client_id: config.spotifyClientId,
     scope: scopesArray.join(' '),
     redirect_uri: config.spotifyRedirectUri,
     state
   })
 
-  res.cookie("auth_state", state, { httpOnly: true })
+  res.cookie('auth_state', state, { httpOnly: true })
   res.redirect(`http://accounts.spotify.com/authorize?${queryString}`)
 })
 
 app.get('/callback', (req, res, next) => {
   const { code, state } = req.query
-  const { auth_state } = req.cookies
+  const authState = req.cookies.auth_state
 
-  if (!state || state !== auth_state) {
+  if (!state || state !== authState) {
     next(new Error("The state doesn't match"))
   }
 
