@@ -14,7 +14,7 @@ export default class CustomApp extends App {
   }
 
   render () {
-    const { Component, pageProps, store } = this.props
+    const { Component, pageProps } = this.props
     return (
       <Container>
         <HtmlHead />

@@ -1,6 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
-import { Menu, Button } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 
 import { SPRAY } from '../utils/colors'
 
