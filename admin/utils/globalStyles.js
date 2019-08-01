@@ -1,4 +1,4 @@
-import css from "styled-jsx/css";
+import css from 'styled-jsx/css'
 
 import {
   CLOUDS,
@@ -7,7 +7,7 @@ import {
   ALABASTER,
   ASBESTOS,
   POMEGRANATE
-} from "./colors";
+} from './colors'
 
 export const generalStyles = css.global`
     body {
@@ -30,7 +30,7 @@ export const generalStyles = css.global`
       flex: 1;
       padding: 0 20px 50px;
     }
-  `;
+  `
 
 export const visibilityStyles = css.global`
     @media only screen and (max-width: 767px) {
@@ -68,7 +68,7 @@ export const visibilityStyles = css.global`
             display: none !important;
         }
     }
-  `;
+  `
 
 export const semanticStyles = css.global`
     .header {
@@ -85,4 +85,4 @@ export const semanticStyles = css.global`
         0 1px 1px 0 rgba(0,0,0,0.12),
         0 2px 1px -1px rgba(0,0,0,0.1) !important;
     }
-  `;
+  `

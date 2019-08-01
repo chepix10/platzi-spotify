@@ -1,5 +1,5 @@
-import React from "react";
-import { Table, Button } from "semantic-ui-react";
+import React from 'react'
+import { Table, Button } from 'semantic-ui-react'
 
 const IndexPage = () => {
   return (
@@ -26,7 +26,7 @@ const IndexPage = () => {
             <Table.Cell>3aOaGXIkE0Lnq9UIh1AgJB</Table.Cell>
             <Table.Cell>Guillermo Rodas</Table.Cell>
             <Table.Cell>
-              <Button color="red">Delete</Button>
+              <Button color='red'>Delete</Button>
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -39,13 +39,13 @@ const IndexPage = () => {
             <Table.Cell>3aOaGXIkE0Lnq9UIh1AgJB</Table.Cell>
             <Table.Cell>Guillermo Rodas</Table.Cell>
             <Table.Cell>
-              <Button color="red">Delete</Button>
+              <Button color='red'>Delete</Button>
             </Table.Cell>
           </Table.Row>
         </Table.Body>
       </Table>
     </div>
-  );
-};
+  )
+}
 
-export default IndexPage;
+export default IndexPage
