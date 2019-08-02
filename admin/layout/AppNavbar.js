@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Menu, Icon, Dropdown, Button } from 'semantic-ui-react'
 
@@ -26,56 +26,70 @@ const dropdownMenuStyles = {
   width: '150px'
 }
 
-const Navbar = ({
-  handleLogin,
-  handleLogout,
-  isAuthenticated,
-  loggedUser: { name, email, picture }
-}) => {
-  const showEmail = name && email
+class Navbar extends Component {
+  constructor(props) {
+    super(props)
+  }
 
-  return (
-    <nav className='navbar'>
-      <Menu fixed='top' style={navbarMenuStyles}>
-        <Logo />
-        <Menu.Menu position='right'>
-          <Menu.Item style={menuItemStyles}>
-            {isAuthenticated ? (
-              <Dropdown
-                style={dropdownStyles}
-                trigger={<Avatar picture={picture} />}
-                pointing='top right'
-              >
-                <Dropdown.Menu style={dropdownMenuStyles}>
-                  <Dropdown.Item disabled>
-                    <span>
-                      <span>{name || email}</span>
-                      {showEmail && (
-                        <p>
-                          <small>{email}</small>
-                        </p>
-                      )}
-                    </span>
-                  </Dropdown.Item>
+  onLogin = () => {
+    this.props.handleLogin()
+  }
 
-                  <Dropdown.Item onClick={handleLogout}>
-                    <span>
-                      <Icon name='log out' />
-                      <span>Salir</span>
-                    </span>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            ) : (
-              <Button onClick={handleLogin} color='olive'>
-                Log in
-              </Button>
-            )}
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu>
-    </nav>
-  )
+  onLogout = () => {
+    this.props.handleLogout()
+  }
+
+  render() {
+    const {
+      isAuthenticated,
+      loggedUser: { name, email, picture }
+    } = this.props
+
+    const showEmail = name && email
+
+    return (
+      <nav className='navbar'>
+        <Menu fixed='top' style={navbarMenuStyles}>
+          <Logo />
+          <Menu.Menu position='right'>
+            <Menu.Item style={menuItemStyles}>
+              {isAuthenticated ? (
+                <Dropdown
+                  style={dropdownStyles}
+                  trigger={<Avatar picture={picture} />}
+                  pointing='top right'
+                >
+                  <Dropdown.Menu style={dropdownMenuStyles}>
+                    <Dropdown.Item disabled>
+                      <span>
+                        <span>{name || email}</span>
+                        {showEmail && (
+                          <p>
+                            <small>{email}</small>
+                          </p>
+                        )}
+                      </span>
+                    </Dropdown.Item>
+  
+                    <Dropdown.Item onClick={this.onLogout}>
+                      <span>
+                        <Icon name='log out' />
+                        <span>Salir</span>
+                      </span>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              ) : (
+                <Button onClick={this.onLogin} color='olive'>
+                  Log in
+                </Button>
+              )}
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+      </nav>
+    )
+  }
 }
 
 Navbar.propTypes = {

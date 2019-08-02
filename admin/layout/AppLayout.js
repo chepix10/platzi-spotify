@@ -37,11 +37,11 @@ class AppLayout extends Component {
     }
   }
 
-  handleLogin () {
+  handleLogin = () => {
     this.authService.login()
   }
 
-  handleLogout () {
+  handleLogout = () => {
     this.authService.logout()
     window.location.href = '/'
   }
