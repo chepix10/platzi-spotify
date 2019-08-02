@@ -32,6 +32,28 @@ const getUserPlaylists = (accessToken, userId) => {
   })
 }
 
+const getUserTweets = (accessToken, userId) => {
+  if (!accessToken || !userId) {
+    return Promise.resolve(null)
+  }
+
+  const options = {
+    url: `https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=${encodeURIComponent(userId)}`,
+    headers: { Authorization: `Bearer ${accessToken}` },
+    json: true
+  }
+
+  return new Promise((resolve, reject) => {
+    request.get(options, function (error, response, body) {
+      if (error || response.statusCode !== 200) {
+        reject(error)
+      }
+
+      resolve(body)
+    })
+  })
+}
+
 app.post('/api/auth/token', (req, res) => {
   const { email, username, name } = req.body
   const token = jwt.sign({ sub: username, email, name }, config.authJwtSecret)
@@ -74,6 +96,34 @@ app.get('/api/playlists', async (req, res, next) => {
     const accessToken = body.access_token
     const userPlaylists = await getUserPlaylists(accessToken, userId)
     res.json({ playlists: userPlaylists })
+  })
+})
+
+app.get('/api/tweets', async (res, req, next) => {
+  const { userId } = req.query
+
+  const authOptions = {
+    url: 'https://api.twitter.com/oauth2/token',
+    headers: {
+      Authorization: `Basic ${encodeBasic(
+        config.twitterClientId,
+        config.twitterClientSecret
+      )}`
+    },
+    form: {
+      grant_type: 'client_credentials'
+    },
+    json: true
+  }
+
+  request.post(authOptions, async (error, response, body) => {
+    if (error || response.statusCode !== 200) {
+      next(error)
+    }
+
+    const accessToken = body.access_token
+    const userTweets = await getUserTweets(accessToken, userId)
+    res.json({ tweets: userTweets })
   })
 })
 
