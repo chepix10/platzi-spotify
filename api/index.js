@@ -37,8 +37,13 @@ const getUserTweets = (accessToken, userId) => {
     return Promise.resolve(null)
   }
 
+  let url = 'https://api.twitter.com/1.1/tweets/search/fullarchive/dev.json'
+  url = url + `?query=${encodeURIComponent('from:' + userId)}`
+  url = url + `&fromDate=${encodeURIComponent(201001010000)}`
+  url = url + `&toDate=${encodeURIComponent(201901010000)}`
+
   const options = {
-    url: `https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=${encodeURIComponent(userId)}`,
+    url,
     headers: { Authorization: `Bearer ${accessToken}` },
     json: true
   }
@@ -99,7 +104,7 @@ app.get('/api/playlists', async (req, res, next) => {
   })
 })
 
-app.get('/api/tweets', async (res, req, next) => {
+app.get('/api/tweets', async (req, res, next) => {
   const { userId } = req.query
 
   const authOptions = {
