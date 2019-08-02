@@ -73,13 +73,15 @@ const getUserPlaylists = (accessToken, userId) => {
 // routes
 app.get('/', async function (req, res, next) {
   const { access_token: accessToken } = req.cookies
+  const { hideLogIn } = req.query
 
   try {
     const userInfo = await getUserInfo(accessToken)
     res.render('playlists', {
       userInfo,
       isHome: true,
-      playlists: { items: playlistMocks }
+      playlists: { items: playlistMocks },
+      hideLogIn
     })
   } catch (err) {
     next(err)
@@ -121,10 +123,10 @@ app.get('/login', (req, res) => {
   res.redirect(`https://accounts.spotify.com/authorize?${queryString}`)
 })
 
-app.get("/logout", function(req, res) {
-  res.clearCookie("access_token");
-  res.redirect("/");
-});
+app.get('/logout', function (req, res) {
+  res.clearCookie('access_token')
+  res.redirect('/')
+})
 
 app.get('/callback', (req, res, next) => {
   const { code, state } = req.query
